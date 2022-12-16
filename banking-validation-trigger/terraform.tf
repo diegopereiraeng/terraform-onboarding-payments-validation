@@ -85,42 +85,5 @@ trigger:
         - name: firstDeploy
           type: String
           value: "false"
-
-trigger:
-  
-  enabled: true
-  description: ""
-  tags: {}
-  orgIdentifier: ${var.orgId}
-  projectIdentifier: ${var.projectId}
-  pipelineIdentifier: DiegoautomationTest
-  source:
-    type: Webhook
-    spec:
-      type: Github
-      spec:
-        type: PullRequest
-        spec:
-          connectorRef: account.diegogithubapp
-          autoAbortPreviousExecutions: false
-          payloadConditions:
-            - key: targetBranch
-              operator: Equals
-              value: master
-          headerConditions: []
-          repoName: test
-          actions:
-            - Reopen
-            - Open
-  inputYaml: |
-    pipeline:
-      identifier: DiegoautomationTest
-      variables:
-        - name: gitUser
-          type: String
-          value: ${var.gitUser}
-        - name: FF_Key
-          type: String
-          value: ${var.ffKey}
     EOT
 }
