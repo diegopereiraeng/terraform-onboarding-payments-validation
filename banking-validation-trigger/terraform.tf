@@ -20,7 +20,7 @@ resource "harness_platform_triggers" "trigger-banking" {
   name        = "pr-${lower(var.gitUser)}"
   org_id     =  var.orgId
   project_id =  var.projectId
-  target_id  = "DiegoautomationTest"
+  target_id  = "Banking_Validation_Pipeline"
   yaml       = <<-EOT
 trigger:
   name: pr-${lower(var.gitUser)}
