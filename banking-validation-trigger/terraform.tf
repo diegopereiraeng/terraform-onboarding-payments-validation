@@ -26,6 +26,69 @@ trigger:
   name: pr-${lower(var.gitUser)}
   identifier: pr_${lower(var.gitUser)}
   enabled: true
+  orgIdentifier: ${var.orgId}
+  projectIdentifier: ${var.projectId}
+  pipelineIdentifier: Banking_Validation_Pipeline
+  source:
+    type: Webhook
+    spec:
+      type: Github
+      spec:
+        type: PullRequest
+        spec:
+          connectorRef: account.diegogithubapp
+          autoAbortPreviousExecutions: false
+          payloadConditions:
+            - key: targetBranch
+              operator: Regex
+              value: (master|authorization-ff|stable-version)
+            - key: <+trigger.payload.pull_request.user.login>
+              operator: Equals
+              value: diegopereiraeng
+          repoName: payments-validation
+          actions:
+            - Open
+            - Close
+  inputYaml: |
+    pipeline:
+      identifier: Banking_Validation_Pipeline
+      properties:
+        ci:
+          codebase:
+            build:
+              type: PR
+              spec:
+                number: <+trigger.prNumber>
+      stages:
+        - parallel:
+            - stage:
+                identifier: Deploy_Prod
+                type: Deployment
+                spec:
+                  service:
+                    serviceRef: ${var.serviceId}
+                    serviceInputs:
+                      serviceDefinition:
+                        type: Kubernetes
+                        spec:
+                          artifacts:
+                            primary:
+                              primaryArtifactRef: ScanPay
+                              sources: ""
+      variables:
+        - name: virtualPath
+          type: String
+          value: <+trigger.gitUser>
+        - name: FF_Key
+          type: String
+          value: ${var.ffKey}
+        - name: firstDeploy
+          type: String
+          value: "false"
+
+trigger:
+  
+  enabled: true
   description: ""
   tags: {}
   orgIdentifier: ${var.orgId}

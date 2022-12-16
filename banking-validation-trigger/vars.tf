@@ -31,4 +31,8 @@ variable "ffKey" {
   type = string
   description = "ff api key (prod env)"
 }
+variable "serviceId" {
+  type = string
+  description = "service ref id"
+}
 
