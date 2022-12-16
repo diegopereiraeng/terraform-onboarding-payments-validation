@@ -19,7 +19,7 @@ resource "harness_platform_service" "new_service" {
   description = "Banking Demo"
   org_id      = "default"
   tags       = ["team:latam", "banking-demo"]
-  project_id  = "Demo_Sandbox"
+  project_id  = "GIT_FLOW_DEMO"
   yaml        = <<-EOT
                 service:
                   name: payments-validation-${var.gitUser}
