@@ -44,7 +44,7 @@ trigger:
               value: (master|authorization-ff|stable-version)
             - key: <+trigger.payload.pull_request.user.login>
               operator: Equals
-              value: diegopereiraeng
+              value: ${lower(var.gitUser)}
           repoName: payments-validation
           actions:
             - Open
