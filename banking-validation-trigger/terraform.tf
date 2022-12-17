@@ -48,7 +48,7 @@ trigger:
           repoName: payments-validation
           actions:
             - Open
-            - Close
+            - Reopen
   inputYaml: |
     pipeline:
       identifier: Banking_Validation_Pipeline
