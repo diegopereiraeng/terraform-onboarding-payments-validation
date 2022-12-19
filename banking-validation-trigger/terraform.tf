@@ -66,7 +66,7 @@ trigger:
                 type: Deployment
                 spec:
                   service:
-                    serviceRef: ${var.serviceId}
+                    serviceRef: payments_validation_${lower(var.gitUser)}
                     serviceInputs:
                       serviceDefinition:
                         type: Kubernetes
