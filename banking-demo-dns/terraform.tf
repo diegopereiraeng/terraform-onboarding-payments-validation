@@ -20,7 +20,7 @@ resource "google_dns_record_set" "dns_record" {
   managed_zone = "harness-demo"
   type         = "A"
   ttl          = 300
-
+  project     = var.project
   rrdatas = [var.ipAddress]
 }
 
