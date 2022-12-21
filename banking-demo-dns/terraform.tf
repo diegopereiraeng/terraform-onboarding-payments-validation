@@ -12,7 +12,7 @@ terraform {
 provider "google" {
 // credentials = "${file("${var.gcp_sa}")}" //
  project     = var.project //
- region      = var.region //"us-central1-a"
+ //region      = var.region //"us-central1-a"
 }
 
 resource "google_dns_record_set" "dns_record" {
