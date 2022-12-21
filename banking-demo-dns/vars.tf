@@ -1,8 +1,8 @@
-variable "gcp_sa" {
-  type = string
-  description = "gcp sa"
+# variable "gcp_sa" {
+#   type = string
+#   description = "gcp sa"
 
-}
+# }
 variable "project" {
   type = string
   description = "gcp project"

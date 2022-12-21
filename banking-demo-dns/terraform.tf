@@ -10,14 +10,14 @@ terraform {
 
 // Configure the Google Cloud provider
 provider "google" {
- credentials = "${file("${var.gcp_sa}")}" //
+// credentials = "${file("${var.gcp_sa}")}" //
  project     = var.project //
  region      = var.region //"us-central1-a"
 }
 
 resource "google_dns_record_set" "dns_record" {
-  name         = "${vars.gitUser}-payments-validation.harness-demo.site."
-  managed_zone = harness-demo
+  name         = "${trim(var.gitUser, "\"")}-payments-validation.harness-demo.site."
+  managed_zone = "harness-demo"
   type         = "A"
   ttl          = 300
 
