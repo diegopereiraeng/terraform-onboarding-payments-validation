@@ -44,7 +44,7 @@ trigger:
               value: (master|authorization-ff|stable-version)
             - key: <+trigger.payload.pull_request.user.login>
               operator: Equals
-              value: ${lower(var.gitUser)}
+              value: ${var.gitUser}
           repoName: payments-validation
           actions:
             - Open
@@ -66,7 +66,7 @@ trigger:
                 type: Deployment
                 spec:
                   service:
-                    serviceRef: payments_validation_${lower(var.gitUser)}
+                    serviceRef: payments_validation_${replace(lower(var.gitUser),"-","_")}
                     serviceInputs:
                       serviceDefinition:
                         type: Kubernetes
@@ -78,7 +78,7 @@ trigger:
       variables:
         - name: virtualPath
           type: String
-          value: <+trigger.gitUser>
+          value: <+<+trigger.gitUser>.toLowerCase()>
         - name: FF_Key
           type: String
           value: ${var.ffKey}

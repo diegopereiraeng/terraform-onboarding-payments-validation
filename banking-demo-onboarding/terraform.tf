@@ -14,17 +14,17 @@ provider "harness" {
 }
 
 resource "harness_platform_service" "new_service" {
-  identifier  = "payments_validation_${replace(var.gitUser,"-","_")}"
-  name        = "payments-validation-${var.gitUser}"
+  identifier  = "payments_validation_${lower(replace(var.gitUser,"-","_"))}"
+  name        = "payments-validation-${lower(var.gitUser)}"
   description = "Banking Demo"
   org_id      = "default"
   tags       = ["team:latam", "banking-demo"]
   project_id  = "GIT_FLOW_DEMO"
   yaml        = <<-EOT
                 service:
-                  name: payments-validation-${var.gitUser}
+                  name: payments-validation-${lower(var.gitUser)}
                   description: description
-                  identifier: payments_validation_${replace(var.gitUser,"-","_")}
+                  identifier: payments_validation_${lower(replace(var.gitUser,"-","_"))}
                   serviceDefinition:
                     type: Kubernetes
                     spec:
@@ -67,7 +67,7 @@ resource "harness_platform_environment" "se-env" {
   yaml       = <<-EOT
                environment:
                 name: ${lower(var.gitUser)}
-                identifier: ${lower(var.gitUser)}
+                identifier: ${replace(lower(var.gitUser),"-","_")}
                 orgIdentifier: ${var.orgId}
                 projectIdentifier: ${var.projectId}
                 type: Production
