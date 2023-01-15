@@ -89,11 +89,11 @@ trigger:
 }
 
 resource "harness_platform_triggers" "trigger-banking-front" {
-  identifier  = "pr_${lower(var.gitUser)}"
-  name        = "pr-${lower(var.gitUser)}"
+  identifier  = "pr_${lower(var.gitUser)}_front"
+  name        = "pr-${lower(var.gitUser)}_front"
   org_id     =  var.orgId
   project_id =  var.projectId
-  target_id  = "Banking_Validation_Pipeline"
+  target_id  = "Production_Git_Flow"
   yaml       = <<-EOT
 trigger:
   name: pr-${lower(var.gitUser)}
