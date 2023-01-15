@@ -87,3 +87,69 @@ trigger:
           value: "false"
     EOT
 }
+
+resource "harness_platform_triggers" "trigger-banking-front" {
+  identifier  = "pr_${lower(var.gitUser)}"
+  name        = "pr-${lower(var.gitUser)}"
+  org_id     =  var.orgId
+  project_id =  var.projectId
+  target_id  = "Banking_Validation_Pipeline"
+  yaml       = <<-EOT
+trigger:
+  name: pr-${lower(var.gitUser)}
+  identifier: pr_${lower(var.gitUser)}
+  enabled: true
+  orgIdentifier: ${var.orgId}
+  projectIdentifier: ${var.projectId}
+  pipelineIdentifier: Production_Git_Flow
+  source:
+    type: Webhook
+    spec:
+      type: Github
+      spec:
+        type: PullRequest
+        spec:
+          connectorRef: account.diegogithubapp
+          autoAbortPreviousExecutions: false
+          payloadConditions:
+            - key: targetBranch
+              operator: Equals
+              value: dev
+            - key: <+trigger.payload.pull_request.user.login>
+              operator: Equals
+              value: ${var.gitUser}
+          repoName: gitflow-ff-demo
+          actions:
+            - Open
+            - Reopen
+  inputYaml: |
+    pipeline:
+      identifier: Production_Git_Flow
+      properties:
+        ci:
+          codebase:
+            build:
+              type: PR
+              spec:
+                number: <+trigger.prNumber>
+      variables:
+        - name: tag
+          type: String
+          value: ${replace(lower(var.gitUser),"-","_")}
+        - name: ffkey
+          type: String
+          value: ${var.ffKeyFront}
+        - name: virtualPath
+          type: String
+          value: ${replace(lower(var.gitUser),"-","_")}
+        - name: gitEvent
+          type: String
+          value: PR
+        - name: target
+          type: String
+          value: dev
+        - name: branch
+          type: String
+          value: <+trigger.sourceBranch>
+    EOT
+}
