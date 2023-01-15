@@ -27,9 +27,11 @@ variable "apiKey" {
   type = string
   description = "personal api key (pat)"
 }
-variable "ffKey" {
+variable "ffKeyFront" {
   type = string
-  description = "ff api key (prod env)"
+  description = "ff api key for frontend app (your env)"
 }
+
+
 
 
