@@ -1,8 +1,10 @@
 *.json
 
-terraform.tfstate
-**/terraform.tfstate.*
 
 terraform-example/
 terraform-example-copy/
+
+
+terraform.tfstate
+**/terraform.tfstate.*
 
