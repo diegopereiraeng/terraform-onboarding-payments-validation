@@ -50,7 +50,7 @@ resource "harness_platform_service" "new_service" {
                             - spec:
                                 connectorRef: account.DockerHubDiego
                                 imagePath: diegokoala/payments-validation
-                                tag: <+pipeline.variables.tag>
+                                tag: <+pipeline.stages.Build.spec.execution.steps.Export_Tag_Version.output.outputVariables.release>
                               identifier: ScanPay
                               type: DockerRegistry
                   gitOpsEnabled: false
